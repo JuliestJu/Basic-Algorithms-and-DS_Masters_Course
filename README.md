@@ -1,1 +1,1 @@
-# Basic-Algorithms-and-DS_Masters_Course
+# Basic Algorithms and DS
