@@ -1,6 +1,6 @@
-import queue
 import time
 import threading
+import queue
 
 # Create a queue for requests
 request_queue = queue.Queue()
