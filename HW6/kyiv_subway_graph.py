@@ -41,18 +41,15 @@ G.add_edge("Золоті ворота", "Театральна")  # Red to Green
 G.add_edge("Майдан Незалежності", "Хрещатик")  # Red to Blue
 G.add_edge("Палац спорту", "Площа Українських Героїв")  # Green to Blue
 
+# Create a color map based on the 'line' attribute
 color_map = []
 for node in G:
-    # Default color if 'line' attribute is missing
-    node_color = 'gray'
-    if 'line' in G.nodes[node]:
-        if G.nodes[node]['line'] == 'Red':
-            node_color = 'red'
-        elif G.nodes[node]['line'] == 'Blue':
-            node_color = 'blue'
-        elif G.nodes[node]['line'] == 'Green':
-            node_color = 'green'
-    color_map.append(node_color)
+    if G.nodes[node]['line'] == 'Red':
+        color_map.append('red')
+    elif G.nodes[node]['line'] == 'Blue':
+        color_map.append('blue')
+    elif G.nodes[node]['line'] == 'Green':
+        color_map.append('green')
 
 # Analyzing the graph
 print("Number of stations:", G.number_of_nodes())
@@ -62,9 +59,23 @@ print("Degree of each station:", dict(G.degree()))
 # Determine positions for the nodes (this might need further adjustment for better visualization)
 pos = nx.spring_layout(G, iterations=3000)
 
+# Drawing the nodes
+nx.draw_networkx_nodes(G, pos, node_color=color_map, node_size=50)
 
-# Drawing the graph using the color map
-nx.draw(G, pos, with_labels=True, node_color=color_map, node_size=50, font_size=8, font_color='black')
+# Adjust label positions to be slightly above the nodes
+label_pos = {key: [value[0], value[1] + 0.05] for key, value in pos.items()}
+
+# Drawing the labels using adjusted positions
+nx.draw_networkx_labels(G, label_pos, font_size = 10, font_color = 'black')
+
+# Define interchange connections for special coloring
+interchange_edges = [("Золоті ворота", "Театральна"), ("Майдан Незалежності", "Хрещатик"), ("Палац спорту", "Площа Українських Героїв")]
+
+# Create edge colors, defaulting to light gray, but purple for interchange connections
+edge_colors = ['purple' if (u, v) in interchange_edges or (v, u) in interchange_edges else 'lightgray' for u, v in G.edges()]
+
+# Drawing the edges with specified colors
+nx.draw_networkx_edges(G, pos, edge_color=edge_colors)
+
 plt.show()
-
 
