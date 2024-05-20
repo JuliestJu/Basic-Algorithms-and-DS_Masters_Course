@@ -55,11 +55,6 @@ theoretical_probabilities = {
     12: 1/36
 }
 
-# Print the results in a table format
-print(f"{'Sum':>4} {'Simulated Probability':>20} {'Theoretical Probability':>25}")
-for sum_ in sorted(probabilities.keys()):
-    print(f"{sum_:>4} {probabilities[sum_]:>20.4%} {theoretical_probabilities[sum_]:>25.4%}")
-
 # Determine the directory of the script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -67,11 +62,6 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 readme_path = os.path.join(script_dir, 'readme.md')
 plot_path = os.path.join(script_dir, 'probabilities_plot.png')
 simulation_data_path = os.path.join(script_dir, 'simulation_data.json')
-
-# Debug print for file paths
-print(f"Script directory: {script_dir}")
-print(f"Plot path: {plot_path}")
-print(f"Simulation data path: {simulation_data_path}")
 
 # Save the plot
 plot_probabilities(probabilities, theoretical_probabilities, plot_path)
